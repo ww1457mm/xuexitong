@@ -49,7 +49,6 @@ struct Index {
             .borderRadius(10)
             .margin({ top: 8, bottom: 8 });
 
-          // 轮播图广告
           Column() {
             Image($r('app.media.xuexitongtubiao'))
               .width('90%')
@@ -58,30 +57,91 @@ struct Index {
               .borderRadius(10)
           }
 
-          Grid() {
-            ForEach(this.icons, (item: FunctionIcon) => {
-              GridItem() {
-                // 每个图标项：图标在上，标题在下（纵向排列）
-                Column() {
-                  Image(item.icon)
-                    .width(40)
-                    .height(40)
-                    .margin({ bottom: 8 }) // 图标与标题间距
+          Tabs() {
+            TabContent() {
+              Column() {
+                Grid() {
+                  ForEach(this.icons, (item: FunctionIcon) => {
+                    GridItem() {
+                      // 每个图标项：图标在上，标题在下（纵向排列）
+                      Column() {
+                        Image(item.icon)
+                          .width(40)
+                          .height(40)
+                          .margin({ bottom: 8 }) // 图标与标题间距
 
-                  Text(item.title)
-                    .fontSize(14)
-                    .fontWeight(FontWeight.Medium)
+                        Text(item.title)
+                          .fontSize(14)
+                          .fontWeight(FontWeight.Medium)
+                      }
+                      .width('100%')
+                      .height(80) // 固定高度（图标40 + 标题 + 间距）
+                      .justifyContent(FlexAlign.Center) // 整体纵向居中
+                    }
+                  }, (item: FunctionIcon) => item.title) // 唯一键：确保渲染稳定性
                 }
-                .width('100%')
-                .height(80) // 固定高度（图标40 + 标题 + 间距）
-                .justifyContent(FlexAlign.Center) // 整体纵向居中
+                .columnsTemplate('1fr 1fr 1fr 1fr') // 设置为4列，每列宽度为1fr（平分宽度）
+                .width('100%') // 占满屏幕宽度
+                .height(200) // 关键：限制 Grid 高度为 250px，避免撑满
+                .padding({ left: 15, right: 15, top: 10 }) // 左右内边距，避免边缘图标贴边
+                .background('#F5F5F9')
+
+                Button( '查看更多>')
+                  .width('100%')
+                .height(25)
+                .backgroundColor('#F5F5F9')
+                  .fontColor('#333333')
+
+                Column({space: 5}) {
+                  Text('最近使用')
+                    .fontSize(20)
+                    .fontWeight(FontWeight.Bold)
+                    .textAlign(TextAlign.Start)
+                    .width('100%')
+
+                  Row() {
+                    Image($r('app.media.wodekecheng'))
+                    .width(50)
+                    .height(50)
+                    .margin({ right: 10 })
+
+                    Text( '智能手机软件开发技术')
+                    .fontSize(16)
+
+                    Button( '课程')
+                      .width('17%')
+                      .height(20)
+                      .fontColor('#333333')
+                      .backgroundColor('#ffffffff')
+
+                    Button( '+常用')
+                      .width('20%')
+                      .height(25)
+                      .backgroundColor('#ffffffff')
+                      .fontColor('#333333')
+                  }
+
+                  Button( '查看更多>')
+                    .width('100%')
+                    .height(25)
+                    .backgroundColor('#F5F5F9')
+                    .fontColor('#333333')
+                }
+                .margin({ top: 10 })
+                .backgroundColor('#F5F5F9')
+                .padding({ left: 15, right: 15, top: 10 })
               }
-            }, (item: FunctionIcon) => item.title) // 唯一键：确保渲染稳定性
+              .height('100%')
+              .justifyContent(FlexAlign.Start)
+              .borderRadius(10)
+            }
+            .tabBar('常用')
+
+            TabContent() {
+              Text('推荐的内容').fontSize(30)
+            }
+            .tabBar('推荐')
           }
-          .columnsTemplate('1fr 1fr 1fr 1fr') // 设置为4列，每列宽度为1fr（平分宽度）
-          .width('100%') // 占满屏幕宽度
-          .height(250) // 关键：限制 Grid 高度为 250px，避免撑满
-          .padding({ left: 15, right: 15, top: 10 }) // 左右内边距，避免边缘图标贴边
         }
         .height('100%')
         .justifyContent(FlexAlign.Start)
